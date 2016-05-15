@@ -1,8 +1,6 @@
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -23,10 +21,16 @@ public class HelloWorld {
     
     private static void executeProgram() throws IOException {
         appendMessage(LOG_FILE, " - JavaSE - execute " + RESULT_FILE, true);
-        ProcessBuilder pb = new ProcessBuilder("python", RESULT_FILE);
-        Process p = pb.start();
-        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        appendMessage(LOG_FILE, " - JavaSE - result  " + RESULT_FILE + " is '" + in.readLine() + "'", true);
+        new Thread() {
+            public void run() {
+                ProcessBuilder pb = new ProcessBuilder("python", RESULT_FILE);
+                try {
+                    pb.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
     
     private static void createProgram() throws IOException {
@@ -56,6 +60,12 @@ public class HelloWorld {
     
     public static void main(String[] args) throws IOException {
         run();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+        appendMessage(LOG_FILE, " - JavaSE - Exit", true);
     }
     
 }
