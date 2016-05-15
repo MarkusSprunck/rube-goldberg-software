@@ -35,7 +35,7 @@ public class HelloWorld {
     
     private static void createProgram() throws IOException {
         appendMessage(LOG_FILE, " - JavaSE - create  " + RESULT_FILE, true);
-        String content = new String(Files.readAllBytes(Paths.get("./template_python.txt")));
+        String content = new String(Files.readAllBytes(Paths.get("./src/template_python.txt")));
         appendMessage(RESULT_FILE, content, false);
     }
     
