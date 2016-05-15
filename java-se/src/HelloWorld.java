@@ -21,27 +21,18 @@ public class HelloWorld {
         }
     }
     
-    public static void main(String[] args) throws IOException {
-        appendMessage(LOG_FILE, " - JavaSE - Start Hello, World!", true);
-        createPythonProgram();
-        executePythonProgram();
-        appendMessage(LOG_FILE, " - JavaSE - End", true);
-    }
-    
-    private static void executePythonProgram() throws IOException {
+    private static void executeProgram() throws IOException {
         appendMessage(LOG_FILE, " - JavaSE - execute " + RESULT_FILE, true);
-        
         ProcessBuilder pb = new ProcessBuilder("python", RESULT_FILE);
         Process p = pb.start();
         BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        
         appendMessage(LOG_FILE, " - JavaSE - result  " + RESULT_FILE + " is '" + in.readLine() + "'", true);
     }
     
-    private static void createPythonProgram() throws IOException {
-        appendMessage(LOG_FILE, " - JavaSE - create  "+ RESULT_FILE, true);
-        
-        appendMessage(RESULT_FILE, "print 'Hello, World!'", false);
+    private static void createProgram() throws IOException {
+        appendMessage(LOG_FILE, " - JavaSE - create  " + RESULT_FILE, true);
+        String content = new String(Files.readAllBytes(Paths.get("./template_python.txt")));
+        appendMessage(RESULT_FILE, content, false);
     }
     
     private static void appendMessage(String file, String message, boolean addTimeStamp) throws IOException {
@@ -55,4 +46,16 @@ public class HelloWorld {
             System.err.println(e.getMessage());
         }
     }
+    
+    private static void run() throws IOException {
+        appendMessage(LOG_FILE, " - JavaSE - Hello, World!", true);
+        createProgram();
+        executeProgram();
+        appendMessage(LOG_FILE, " - JavaSE - End", true);
+    }
+    
+    public static void main(String[] args) throws IOException {
+        run();
+    }
+    
 }

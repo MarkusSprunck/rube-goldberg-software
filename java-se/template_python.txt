@@ -1,0 +1,23 @@
+import datetime
+
+class HelloWorld(object):
+    
+    LOG_FILE = "../result/rube-goldberg-software.log";
+        
+    def appendMessage(self, file, message, addTimeStamp):
+        f = open(file, 'a+')
+        if (addTimeStamp):
+            time = datetime.datetime.now()
+            f.write(time.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3])
+        f.write(message)
+        f.write('\n')
+        f.close()
+        
+        
+    def run(self):
+        self.appendMessage(self.LOG_FILE, " - Python - Hello, World!", True);
+        self.appendMessage(self.LOG_FILE, " - Python - End", True);
+
+
+if __name__ == '__main__':
+    HelloWorld().run()
