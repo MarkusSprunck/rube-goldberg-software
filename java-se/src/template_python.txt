@@ -1,5 +1,6 @@
 import datetime
 import subprocess
+from subprocess import Popen
 import time
 import os
 
@@ -15,15 +16,7 @@ class HelloWorld(object):
         args = ['c++', self.RESULT_FILE,  '-o', 'HelloWorld']
         subprocess.call(args) 
         args = ['./HelloWorld']
-        subprocess.call(args) 
-  
-  
-  
-  
-  
-  
-  
-  
+        Popen(args) 
   
     def createProgram(self):
         self.appendMessage(self.LOG_FILE, " - Python - delete", True);
@@ -50,9 +43,9 @@ class HelloWorld(object):
         self.executeProgram()
         self.appendMessage(self.LOG_FILE, " - Python - End", True);
 
-
 if __name__ == '__main__':
     helloWorld = HelloWorld()
     helloWorld.run()
     helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Exit", True);
+
 
