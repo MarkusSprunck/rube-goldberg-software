@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 public class HelloWorld {
     
@@ -12,11 +13,21 @@ public class HelloWorld {
     
     private static final String RESULT_FILE = "HelloWorld.py";
     
+    private String contentJavaEncoded;
+    private String contentPythonEncoded;
+    private String contentCppEncoded;
+    
+    public HelloWorld(String contentJavaEncoded, String contentPythonEncoded, String contentCppEncoded) {
+        this.contentJavaEncoded = contentJavaEncoded;
+        this.contentPythonEncoded = contentPythonEncoded;
+        this.contentCppEncoded = contentCppEncoded;
+    }
+    
     private void executeProgram() throws IOException {
         appendMessage(LOG_FILE, " - JavaSE - execute " + RESULT_FILE, true);
         new Thread() {
             public void run() {
-                ProcessBuilder pb = new ProcessBuilder("python", RESULT_FILE);
+                ProcessBuilder pb = new ProcessBuilder("python", RESULT_FILE, contentJavaEncoded, contentPythonEncoded, contentCppEncoded);
                 try {
                     pb.start();
                 } catch (IOException e) {
@@ -31,8 +42,8 @@ public class HelloWorld {
         Files.deleteIfExists(Paths.get(RESULT_FILE));
         
         appendMessage(LOG_FILE, " - JavaSE - create  " + RESULT_FILE, true);
-        String content = new String(Files.readAllBytes(Paths.get("../java-se/src/template_python.txt")));
-        appendMessage(RESULT_FILE, content, false);
+        String contentPython = new String(Base64.getDecoder().decode(contentPythonEncoded), "UTF-8");
+        appendMessage(RESULT_FILE, contentPython, false);
     }
     
     private void appendMessage(String file, String message, boolean addTimeStamp) throws IOException {
@@ -55,8 +66,8 @@ public class HelloWorld {
     }
     
     public static void main(String[] args) throws IOException {
-        HelloWorld helloWorld = new HelloWorld();
-        helloWorld.appendMessage(LOG_FILE, " - JavaSE - Start with #args=" + args.length, true);
+        HelloWorld helloWorld = new HelloWorld(args[0], args[1], args[2]);
+        helloWorld.appendMessage(LOG_FILE, " - JavaSE - Number of arguments " + args.length, true);
         helloWorld.run();
         helloWorld.appendMessage(LOG_FILE, " - JavaSE - Exit", true);
     }
