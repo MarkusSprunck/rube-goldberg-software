@@ -4,6 +4,7 @@ import java.nio.file.Paths;
 import java.util.Base64;
 import static java.nio.file.StandardCopyOption.*;
 
+
 public class Starter {
     
     private static final String CPP_SRC_PATH = "../java-se/src/template_cpp.txt";
@@ -21,6 +22,10 @@ public class Starter {
         final String contentPythonEncoded = Base64.getEncoder().encodeToString(contentPython.getBytes());
         final String contentCppEncoded = Base64.getEncoder().encodeToString(contentCpp.getBytes());
         
+        System.out.println("contentJavaEncoded  =" + contentJavaEncoded);
+        System.out.println("contentPythonEncoded=" + contentPythonEncoded);
+        System.out.println("contentCppEncoded   =" + contentCppEncoded);
+           
         // cleanup
         Files.deleteIfExists(Paths.get(HelloWorld.LOG_FILE));
         Files.deleteIfExists(Paths.get("HelloWorld.java"));
