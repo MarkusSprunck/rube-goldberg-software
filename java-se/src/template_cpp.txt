@@ -15,7 +15,7 @@ std::string getTime() {
 
 	int milli = curTime.tv_usec / 1000;
 	char buf[sizeof "2011-10-08T07:07:09"];
-	strftime(buf, sizeof buf, "%FT%T", gmtime(&now));
+	strftime(buf, sizeof buf, "%FT%T", localtime(&now));
 	sprintf(buf, "%s.%d", buf, milli);
 
 	return buf;
