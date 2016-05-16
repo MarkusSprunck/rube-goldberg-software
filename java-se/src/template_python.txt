@@ -1,10 +1,40 @@
 import datetime
+import subprocess
 import time
+import os
 
 class HelloWorld(object):
     
-    LOG_FILE = "../result/rube-goldberg-software.log";
+    LOG_FILE = "rube-goldberg-software.log";
     
+    RESULT_FILE = "HelloWorld.cpp";
+    
+    def executeProgram(self):
+        self.appendMessage(self.LOG_FILE, " - Python - execute", True);
+  
+        args = ['c++', self.RESULT_FILE,  '-o', 'HelloWorld']
+        subprocess.call(args) 
+        args = ['./HelloWorld']
+        subprocess.call(args) 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    def createProgram(self):
+        self.appendMessage(self.LOG_FILE, " - Python - delete", True);
+        if os.path.exists(self.RESULT_FILE):
+            os.remove(self.RESULT_FILE)
+    
+        self.appendMessage(self.LOG_FILE, " - Python - create", True);
+        content = open('../java-se/src/template_cpp.txt', 'r').read()
+        print content
+        self.appendMessage(self.RESULT_FILE, content, False);
+        
     def appendMessage(self, file, message, addTimeStamp):
         f = open(file, 'a+')
         if (addTimeStamp):
@@ -13,13 +43,16 @@ class HelloWorld(object):
         f.write(message)
         f.write('\n')
         f.close()
-        
+ 
     def run(self):
         self.appendMessage(self.LOG_FILE, " - Python - Hello, World!", True);
+        self.createProgram()
+        self.executeProgram()
         self.appendMessage(self.LOG_FILE, " - Python - End", True);
+
 
 if __name__ == '__main__':
     helloWorld = HelloWorld()
     helloWorld.run()
-    time.sleep( 2 )
     helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Exit", True);
+
