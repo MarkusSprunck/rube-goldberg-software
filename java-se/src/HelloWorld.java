@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 
 public class HelloWorld {
     
-    private static final String LOG_FILE = "rube-goldberg-software.log";
-  
+    static final String LOG_FILE = "rube-goldberg-software.log";
+    
     private static final String RESULT_FILE = "HelloWorld.py";
     
     private void executeProgram() throws IOException {
@@ -56,6 +56,7 @@ public class HelloWorld {
     
     public static void main(String[] args) throws IOException {
         HelloWorld helloWorld = new HelloWorld();
+        helloWorld.appendMessage(LOG_FILE, " - JavaSE - Start with #args=" + args.length, true);
         helloWorld.run();
         helloWorld.appendMessage(LOG_FILE, " - JavaSE - Exit", true);
     }
