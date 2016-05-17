@@ -2,7 +2,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -63,10 +62,11 @@ public class HelloWorld {
         appendMessage(LOG_FILE, " - JavaSE - End", true);
     }
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         String contentAll = args[0];
         HelloWorld helloWorld = new HelloWorld(contentAll);
         helloWorld.appendMessage(LOG_FILE, " - JavaSE - Number of arguments " + args.length, true);
+        Thread.sleep(5000);
         helloWorld.appendMessage(LOG_FILE, " - JavaSE - " + contentAll, true);
         helloWorld.run();
         helloWorld.appendMessage(LOG_FILE, " - JavaSE - Exit", true);

@@ -1,13 +1,14 @@
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <ctime>
-#include <sys/time.h>
 #include <stdio.h>
-#include <vector>
-#include <string>
-#include <sstream>
+#include <sys/time.h>
+#include <unistd.h>
+#include <cstdlib>
+#include <ctime>
+#include <fstream>
+#include <iostream>
 #include <iterator>
+#include <sstream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -19,7 +20,6 @@ public:
 	static const string RESULT_FILE;
 
 	static const string BASE64_CHAR;
-
 
 private:
 
@@ -75,7 +75,9 @@ public:
 
 	void executeProgram() {
 		appendMessage(LOG_FILE, " - cpp    - execute " + RESULT_FILE, true);
-		//TODO: to be implemented
+		std::system("javac  HelloWorld.java");
+		string command = "java HelloWorld " + this->contentAllEncoded;
+		std::system(command.c_str());
 	}
 
 	void createProgram() {
@@ -86,7 +88,7 @@ public:
 		string contentAll = base64_decode(contentAllEncoded);
 		istringstream buf(contentAll);
 		istream_iterator<string> beg(buf), end;
-		vector<string> tokens(beg, end);
+		vector < string > tokens(beg, end);
 		string contentCppEncoded = tokens.at(0);
 		string contentCpp = base64_decode(contentCppEncoded);
 		appendMessage(RESULT_FILE, contentCpp, false);
@@ -124,12 +126,11 @@ const string HelloWorld::RESULT_FILE = "HelloWorld.java";
 
 const string HelloWorld::BASE64_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-
 int main(int argc, char *argv[]) {
 	string contentAll = argv[1];
 	HelloWorld* helloWorld = new HelloWorld(contentAll);
-	helloWorld->appendMessage(HelloWorld::LOG_FILE, string(" - cpp    - Number of arguments ") + to_string(argc - 1),
-			true);
+	helloWorld->appendMessage(HelloWorld::LOG_FILE, string(" - cpp    - Number of arguments ") + to_string(argc - 1), true);
+	usleep(5000000u);
 	helloWorld->appendMessage(HelloWorld::LOG_FILE, string(" - cpp    - ") + contentAll, true);
 	helloWorld->run();
 	helloWorld->appendMessage(HelloWorld::LOG_FILE, " - cpp    - Exit", true);

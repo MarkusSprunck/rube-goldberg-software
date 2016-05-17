@@ -1,10 +1,11 @@
+import base64
+import os
+import sys
+import time
 import datetime
 import subprocess
 from subprocess import Popen
-import time
-import os
-import sys
-import base64
+from findertools import sleep
 
 class HelloWorld(object):
     
@@ -12,13 +13,13 @@ class HelloWorld(object):
     
     RESULT_FILE = "HelloWorld.cpp";
     
-    def __init__(self,contentAll):
+    def __init__(self, contentAll):
         self.contentAll = contentAll
     
     def executeProgram(self):
         self.appendMessage(self.LOG_FILE, " - Python - execute", True);
   
-        args = ['c++', self.RESULT_FILE,  '-o', 'HelloWorld']
+        args = ['c++', self.RESULT_FILE, '-o', 'HelloWorld']
         subprocess.call(args) 
         args = ['./HelloWorld', self.contentAll]
         Popen(args) 
@@ -51,7 +52,8 @@ class HelloWorld(object):
 if __name__ == '__main__':
     contentAll = sys.argv[1];
     helloWorld = HelloWorld(contentAll)
-    helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Number of arguments "+ str(len(sys.argv)-1), True);
+    helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Number of arguments " + str(len(sys.argv) - 1), True);
+    time.sleep(10)
     helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - " + str(sys.argv[1]), True);
     helloWorld.run()
     helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Exit", True);
