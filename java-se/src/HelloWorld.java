@@ -16,11 +16,11 @@ public class HelloWorld {
     
     private final String contentAllEncoded;
     
-    public HelloWorld(String contentAllEncoded) throws UnsupportedEncodingException {
+    public HelloWorld(String contentAllEncoded) {
         this.contentAllEncoded = contentAllEncoded;
     }
     
-    private void executeProgram() throws IOException {
+    private void executeProgram() {
         appendMessage(LOG_FILE, " - JavaSE - execute " + RESULT_FILE, true);
         new Thread() {
             public void run() {
@@ -40,11 +40,11 @@ public class HelloWorld {
         
         appendMessage(LOG_FILE, " - JavaSE - create  " + RESULT_FILE, true);
         String contentPythonEncoded = new String(Base64.getDecoder().decode(contentAllEncoded), "UTF-8").split(" ")[1];
-        String contentPython = new String(Base64.getDecoder().decode(contentPythonEncoded), "UTF-8"); 
+        String contentPython = new String(Base64.getDecoder().decode(contentPythonEncoded), "UTF-8");
         appendMessage(RESULT_FILE, contentPython, false);
     }
     
-    private void appendMessage(String file, String message, boolean addTimeStamp) throws IOException {
+    private void appendMessage(String file, String message, boolean addTimeStamp) {
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)))) {
             if (addTimeStamp) {
                 LocalDateTime time = LocalDateTime.now();
@@ -68,7 +68,7 @@ public class HelloWorld {
         HelloWorld helloWorld = new HelloWorld(contentAll);
         helloWorld.appendMessage(LOG_FILE, " - JavaSE - Number of arguments " + args.length, true);
         helloWorld.appendMessage(LOG_FILE, " - JavaSE - " + contentAll, true);
-            helloWorld.run();
+        helloWorld.run();
         helloWorld.appendMessage(LOG_FILE, " - JavaSE - Exit", true);
     }
     
