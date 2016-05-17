@@ -21,15 +21,16 @@ std::string getTime() {
 	return buf;
 }
 
-int main() {
+int main(int argc,char *argv[]) {
 
 	std::ofstream outfile;
 	outfile.open("rube-goldberg-software.log", std::ios_base::app);
 
-	outfile << getTime() << " - cpp - Hello, from C++ #1" << endl;
+	outfile << getTime() << " - cpp    - Number of arguments " << (argc-1) << endl;
+	outfile << getTime() << " - cpp    - " << argv[1] << endl;
 	usleep(2000000u);
-
-	outfile << getTime() << " - cpp - Hello, from C++ #2" << endl;
+	outfile << getTime() << " - cpp    - Hello, from C++" << endl;
 
 	return 0;
 }
+

@@ -2,6 +2,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -13,21 +14,17 @@ public class HelloWorld {
     
     private static final String RESULT_FILE = "HelloWorld.py";
     
-    private String contentJavaEncoded;
-    private String contentPythonEncoded;
-    private String contentCppEncoded;
+    private final String contentAllEncoded;
     
-    public HelloWorld(String contentJavaEncoded, String contentPythonEncoded, String contentCppEncoded) {
-        this.contentJavaEncoded = contentJavaEncoded;
-        this.contentPythonEncoded = contentPythonEncoded;
-        this.contentCppEncoded = contentCppEncoded;
+    public HelloWorld(String contentAllEncoded) throws UnsupportedEncodingException {
+        this.contentAllEncoded = contentAllEncoded;
     }
     
     private void executeProgram() throws IOException {
         appendMessage(LOG_FILE, " - JavaSE - execute " + RESULT_FILE, true);
         new Thread() {
             public void run() {
-                ProcessBuilder pb = new ProcessBuilder("python", RESULT_FILE, contentJavaEncoded, contentPythonEncoded, contentCppEncoded);
+                ProcessBuilder pb = new ProcessBuilder("python", RESULT_FILE, contentAllEncoded);
                 try {
                     pb.start();
                 } catch (IOException e) {
@@ -42,7 +39,8 @@ public class HelloWorld {
         Files.deleteIfExists(Paths.get(RESULT_FILE));
         
         appendMessage(LOG_FILE, " - JavaSE - create  " + RESULT_FILE, true);
-        String contentPython = new String(Base64.getDecoder().decode(contentPythonEncoded), "UTF-8");
+        String contentPythonEncoded = new String(Base64.getDecoder().decode(contentAllEncoded), "UTF-8").split(" ")[1];
+        String contentPython = new String(Base64.getDecoder().decode(contentPythonEncoded), "UTF-8"); 
         appendMessage(RESULT_FILE, contentPython, false);
     }
     
@@ -66,9 +64,11 @@ public class HelloWorld {
     }
     
     public static void main(String[] args) throws IOException {
-        HelloWorld helloWorld = new HelloWorld(args[0], args[1], args[2]);
+        String contentAll = args[0];
+        HelloWorld helloWorld = new HelloWorld(contentAll);
         helloWorld.appendMessage(LOG_FILE, " - JavaSE - Number of arguments " + args.length, true);
-        helloWorld.run();
+        helloWorld.appendMessage(LOG_FILE, " - JavaSE - " + contentAll, true);
+            helloWorld.run();
         helloWorld.appendMessage(LOG_FILE, " - JavaSE - Exit", true);
     }
     

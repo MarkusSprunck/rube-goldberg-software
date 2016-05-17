@@ -4,6 +4,7 @@ from subprocess import Popen
 import time
 import os
 import sys
+import base64
 
 class HelloWorld(object):
     
@@ -11,12 +12,15 @@ class HelloWorld(object):
     
     RESULT_FILE = "HelloWorld.cpp";
     
+    def __init__(self,contentAll):
+        self.contentAll = contentAll
+    
     def executeProgram(self):
         self.appendMessage(self.LOG_FILE, " - Python - execute", True);
   
         args = ['c++', self.RESULT_FILE,  '-o', 'HelloWorld']
         subprocess.call(args) 
-        args = ['./HelloWorld']
+        args = ['./HelloWorld', self.contentAll]
         Popen(args) 
   
     def createProgram(self):
@@ -25,9 +29,9 @@ class HelloWorld(object):
             os.remove(self.RESULT_FILE)
     
         self.appendMessage(self.LOG_FILE, " - Python - create", True);
-        content = open('../java-se/src/template_cpp.txt', 'r').read()
-        print content
-        self.appendMessage(self.RESULT_FILE, content, False);
+        contentCppEncoded = base64.b64decode(self.contentAll).split(' ')[2] 
+        contentCpp = base64.b64decode(contentCppEncoded)
+        self.appendMessage(self.RESULT_FILE, contentCpp, False);
         
     def appendMessage(self, file, message, addTimeStamp):
         f = open(file, 'a+')
@@ -45,8 +49,10 @@ class HelloWorld(object):
         self.appendMessage(self.LOG_FILE, " - Python - End", True);
 
 if __name__ == '__main__':
-    helloWorld = HelloWorld()
-    helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Number of arguments "+ str(len(sys.argv)), True);
+    contentAll = sys.argv[1];
+    helloWorld = HelloWorld(contentAll)
+    helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Number of arguments "+ str(len(sys.argv)-1), True);
+    helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - " + str(sys.argv[1]), True);
     helloWorld.run()
     helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Exit", True);
 

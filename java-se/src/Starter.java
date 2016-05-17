@@ -4,11 +4,10 @@ import java.nio.file.Paths;
 import java.util.Base64;
 import static java.nio.file.StandardCopyOption.*;
 
-
 public class Starter {
     
-    private static final String CPP_SRC_PATH = "../java-se/src/template_cpp.txt";
-    private static final String PYTHON_SRC_PATH = "../java-se/src/template_python.txt";
+    private static final String CPP_SRC_PATH = "../java-se/src/HelloWorldTemplate.cpp";
+    private static final String PYTHON_SRC_PATH = "../java-se/src/HelloWorldTemplate.py";
     private static final String JAVA_SE_SRC_PATH = "../java-se/src/HelloWorld.java";
     private static final String JAVA_SE_TARGET_PATH = "./HelloWorld.java";
     
@@ -21,11 +20,10 @@ public class Starter {
         final String contentJavaEncoded = Base64.getEncoder().encodeToString(contentJava.getBytes());
         final String contentPythonEncoded = Base64.getEncoder().encodeToString(contentPython.getBytes());
         final String contentCppEncoded = Base64.getEncoder().encodeToString(contentCpp.getBytes());
+        final String contentAll = String.format("%s %s %s", contentJavaEncoded, contentPythonEncoded, contentCppEncoded);
+        final String contentAllEncoded = Base64.getEncoder().encodeToString(contentAll.getBytes());
+        System.out.print(contentAllEncoded);
         
-        System.out.println("contentJavaEncoded  =" + contentJavaEncoded);
-        System.out.println("contentPythonEncoded=" + contentPythonEncoded);
-        System.out.println("contentCppEncoded   =" + contentCppEncoded);
-           
         // cleanup
         Files.deleteIfExists(Paths.get(HelloWorld.LOG_FILE));
         Files.deleteIfExists(Paths.get("HelloWorld.java"));
@@ -38,7 +36,7 @@ public class Starter {
         // start
         Files.copy(Paths.get(JAVA_SE_SRC_PATH), Paths.get(JAVA_SE_TARGET_PATH), REPLACE_EXISTING);
         new ProcessBuilder("javac", "HelloWorld.java").start().waitFor();
-        new ProcessBuilder("java", "HelloWorld", contentJavaEncoded, contentPythonEncoded, contentCppEncoded).start();
+        new ProcessBuilder("java", "HelloWorld", contentAllEncoded).start();
         
     }
     
