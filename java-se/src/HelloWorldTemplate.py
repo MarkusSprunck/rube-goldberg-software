@@ -9,7 +9,7 @@ from findertools import sleep
 
 class HelloWorld(object):
     
-    LOG_FILE = "rube-goldberg-software.log";
+    LOG_FILE = "HelloWorld-Python.log";
     
     RESULT_FILE = "HelloWorld.cpp";
     
@@ -45,6 +45,7 @@ class HelloWorld(object):
             f.write(time.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3])
         f.write(message)
         f.write('\n')
+        f.flush()
         f.close()
  
     def run(self):

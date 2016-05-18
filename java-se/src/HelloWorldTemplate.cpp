@@ -111,6 +111,8 @@ public:
 			outfile << buf;
 		}
 		outfile << message << endl;
+		outfile.flush();
+		outfile.close();
 	}
 
 	void run() {
@@ -122,7 +124,7 @@ public:
 
 };
 
-const string HelloWorld::LOG_FILE = "rube-goldberg-software.log";
+const string HelloWorld::LOG_FILE = "HelloWorld-Cpp.log";
 
 const string HelloWorld::RESULT_FILE = "HelloWorld.java";
 

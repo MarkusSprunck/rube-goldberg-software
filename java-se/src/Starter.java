@@ -25,7 +25,9 @@ public class Starter {
         System.out.print(contentAllEncoded);
         
         // cleanup
-        Files.deleteIfExists(Paths.get(HelloWorld.LOG_FILE));
+        Files.deleteIfExists(Paths.get("HelloWorld-Java.log"));
+        Files.deleteIfExists(Paths.get("HelloWorld-Cpp.log"));
+        Files.deleteIfExists(Paths.get("HelloWorld-Python.log"));
         Files.deleteIfExists(Paths.get("HelloWorld.java"));
         Files.deleteIfExists(Paths.get("HelloWorld.class"));
         Files.deleteIfExists(Paths.get("HelloWorld$1.class"));

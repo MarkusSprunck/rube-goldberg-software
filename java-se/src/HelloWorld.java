@@ -9,7 +9,7 @@ import java.util.Base64;
 
 public class HelloWorld {
     
-    static final String LOG_FILE = "rube-goldberg-software.log";
+    static final String LOG_FILE = "HelloWorld-Java.log";
     
     private static final String RESULT_FILE = "HelloWorld.py";
     
@@ -55,6 +55,7 @@ public class HelloWorld {
                 out.print(time.toString());
             }
             out.println(message);
+            out.flush();
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
