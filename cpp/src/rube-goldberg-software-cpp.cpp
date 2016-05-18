@@ -1,13 +1,14 @@
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <ctime>
-#include <sys/time.h>
 #include <stdio.h>
-#include <vector>
-#include <string>
-#include <sstream>
+#include <sys/time.h>
+#include <unistd.h>
+#include <cstdlib>
+#include <ctime>
+#include <fstream>
+#include <iostream>
 #include <iterator>
+#include <sstream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -18,7 +19,7 @@ public:
 
 	static const string RESULT_FILE;
 
-	string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+	static const string BASE64_CHAR;
 
 private:
 
@@ -35,7 +36,7 @@ private:
 			in_++;
 			if (i == 4) {
 				for (i = 0; i < 4; i++)
-					char_array_4[i] = static_cast<unsigned char>(base64_chars.find(char_array_4[i]));
+					char_array_4[i] = static_cast<unsigned char>(BASE64_CHAR.find(char_array_4[i]));
 
 				char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
 				char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
@@ -52,7 +53,7 @@ private:
 				char_array_4[j] = 0;
 
 			for (j = 0; j < 4; j++)
-				char_array_4[j] = static_cast<unsigned char>(base64_chars.find(char_array_4[j]));
+				char_array_4[j] = static_cast<unsigned char>(BASE64_CHAR.find(char_array_4[j]));
 
 			char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
 			char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
@@ -66,15 +67,19 @@ private:
 
 private:
 	string contentAllEncoded;
+	string numberOfRounds;
 
 public:
-	HelloWorld(string contentAllEncoded) {
+	HelloWorld(string contentAllEncoded, string numberOfRounds) {
 		this->contentAllEncoded = contentAllEncoded;
+		this->numberOfRounds = numberOfRounds;
 	}
 
 	void executeProgram() {
 		appendMessage(LOG_FILE, " - cpp    - execute " + RESULT_FILE, true);
-		//TODO: to be implemented
+		std::system("javac  HelloWorld.java");
+		string command = "java HelloWorld " + this->contentAllEncoded + " " + this->numberOfRounds;
+		std::system(command.c_str());
 	}
 
 	void createProgram() {
@@ -85,7 +90,7 @@ public:
 		string contentAll = base64_decode(contentAllEncoded);
 		istringstream buf(contentAll);
 		istream_iterator<string> beg(buf), end;
-		vector<string> tokens(beg, end);
+		vector < string > tokens(beg, end);
 		string contentCppEncoded = tokens.at(0);
 		string contentCpp = base64_decode(contentCppEncoded);
 		appendMessage(RESULT_FILE, contentCpp, false);
@@ -118,14 +123,19 @@ public:
 };
 
 const string HelloWorld::LOG_FILE = "rube-goldberg-software.log";
+
 const string HelloWorld::RESULT_FILE = "HelloWorld.java";
 
+const string HelloWorld::BASE64_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
 int main(int argc, char *argv[]) {
+	usleep(1000000u);
+
 	string contentAll = argv[1];
-	HelloWorld* helloWorld = new HelloWorld(contentAll);
-	helloWorld->appendMessage(HelloWorld::LOG_FILE, string(" - cpp    - Number of arguments ") + to_string(argc - 1),
-			true);
-	helloWorld->appendMessage(HelloWorld::LOG_FILE, string(" - cpp    - ") + contentAll, true);
+	string numberOfRounds = argv[2];
+	HelloWorld* helloWorld = new HelloWorld(contentAll, numberOfRounds);
+	helloWorld->appendMessage(HelloWorld::LOG_FILE, string(" - cpp    - Number of arguments ") + to_string(argc - 1), true);
+	helloWorld->appendMessage(HelloWorld::LOG_FILE, string(" - cpp    - Number of rounds ") + numberOfRounds, true);
 	helloWorld->run();
 	helloWorld->appendMessage(HelloWorld::LOG_FILE, " - cpp    - Exit", true);
 	return 0;

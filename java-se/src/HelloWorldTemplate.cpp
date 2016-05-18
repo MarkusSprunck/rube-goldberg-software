@@ -67,16 +67,18 @@ private:
 
 private:
 	string contentAllEncoded;
+	string numberOfRounds;
 
 public:
-	HelloWorld(string contentAllEncoded) {
+	HelloWorld(string contentAllEncoded, string numberOfRounds) {
 		this->contentAllEncoded = contentAllEncoded;
+		this->numberOfRounds = numberOfRounds;
 	}
 
 	void executeProgram() {
 		appendMessage(LOG_FILE, " - cpp    - execute " + RESULT_FILE, true);
 		std::system("javac  HelloWorld.java");
-		string command = "java HelloWorld " + this->contentAllEncoded;
+		string command = "java HelloWorld " + this->contentAllEncoded + " " + this->numberOfRounds;
 		std::system(command.c_str());
 	}
 
@@ -127,11 +129,13 @@ const string HelloWorld::RESULT_FILE = "HelloWorld.java";
 const string HelloWorld::BASE64_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 int main(int argc, char *argv[]) {
+	usleep(1000000u);
+
 	string contentAll = argv[1];
-	HelloWorld* helloWorld = new HelloWorld(contentAll);
+	string numberOfRounds = argv[2];
+	HelloWorld* helloWorld = new HelloWorld(contentAll, numberOfRounds);
 	helloWorld->appendMessage(HelloWorld::LOG_FILE, string(" - cpp    - Number of arguments ") + to_string(argc - 1), true);
-	usleep(5000000u);
-	helloWorld->appendMessage(HelloWorld::LOG_FILE, string(" - cpp    - ") + contentAll, true);
+	helloWorld->appendMessage(HelloWorld::LOG_FILE, string(" - cpp    - Number of rounds ") + numberOfRounds, true);
 	helloWorld->run();
 	helloWorld->appendMessage(HelloWorld::LOG_FILE, " - cpp    - Exit", true);
 	return 0;

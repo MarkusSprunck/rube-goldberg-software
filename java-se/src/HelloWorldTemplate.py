@@ -15,13 +15,14 @@ class HelloWorld(object):
     
     def __init__(self, contentAll):
         self.contentAll = contentAll
+        self.numberOfRounds = numberOfRounds
     
     def executeProgram(self):
         self.appendMessage(self.LOG_FILE, " - Python - execute", True);
   
         args = ['c++', self.RESULT_FILE, '-o', 'HelloWorld']
         subprocess.call(args) 
-        args = ['./HelloWorld', self.contentAll]
+        args = ['./HelloWorld', self.contentAll, self.numberOfRounds]
         Popen(args) 
   
     def createProgram(self):
@@ -50,12 +51,18 @@ class HelloWorld(object):
         self.appendMessage(self.LOG_FILE, " - Python - End", True);
 
 if __name__ == '__main__':
-    contentAll = sys.argv[1];
+    time.sleep(1)
+    
+    contentAll = sys.argv[1]
+    numberOfRounds = sys.argv[2]
     helloWorld = HelloWorld(contentAll)
     helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Number of arguments " + str(len(sys.argv) - 1), True);
-    time.sleep(10)
-    helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - " + str(sys.argv[1]), True);
-    helloWorld.run()
-    helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Exit", True);
-
+    helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Number of rounds " + str(sys.argv[2]), True);
+    if int(numberOfRounds) > 0:
+        helloWorld.run()
+        helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Exit", True);
+    else:
+        helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Stopped", True);
+    
+  
 

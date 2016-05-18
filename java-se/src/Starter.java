@@ -33,11 +33,12 @@ public class Starter {
         Files.deleteIfExists(Paths.get("HelloWorld"));
         Files.deleteIfExists(Paths.get("HelloWorld.py"));
         
+        Thread.sleep(1000);
+        
         // start
         Files.copy(Paths.get(JAVA_SE_SRC_PATH), Paths.get(JAVA_SE_TARGET_PATH), REPLACE_EXISTING);
         new ProcessBuilder("javac", "HelloWorld.java").start().waitFor();
-        new ProcessBuilder("java", "HelloWorld", contentAllEncoded).start();
+        new ProcessBuilder("java", "HelloWorld", contentAllEncoded, "10").start();
         
     }
-    
 }

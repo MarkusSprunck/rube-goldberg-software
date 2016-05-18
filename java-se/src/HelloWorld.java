@@ -15,15 +15,19 @@ public class HelloWorld {
     
     private final String contentAllEncoded;
     
-    public HelloWorld(String contentAllEncoded) {
+    private final Integer numberOfRounds;
+    
+    public HelloWorld(String contentAllEncoded, Integer numberOfRounds) {
         this.contentAllEncoded = contentAllEncoded;
+        this.numberOfRounds = numberOfRounds;
     }
     
     private void executeProgram() {
         appendMessage(LOG_FILE, " - JavaSE - execute " + RESULT_FILE, true);
         new Thread() {
             public void run() {
-                ProcessBuilder pb = new ProcessBuilder("python", RESULT_FILE, contentAllEncoded);
+                Integer remainingNumberOfRounds = (numberOfRounds-1);
+                ProcessBuilder pb = new ProcessBuilder("python", RESULT_FILE, contentAllEncoded, remainingNumberOfRounds.toString());
                 try {
                     pb.start();
                 } catch (IOException e) {
@@ -63,13 +67,19 @@ public class HelloWorld {
     }
     
     public static void main(String[] args) throws IOException, InterruptedException {
-        String contentAll = args[0];
-        HelloWorld helloWorld = new HelloWorld(contentAll);
+        Thread.sleep(1000);
+        
+        final String contentAll = args[0];
+        final Integer numberOfRounds = Integer.parseInt(args[1]);
+        HelloWorld helloWorld = new HelloWorld(contentAll, numberOfRounds);
         helloWorld.appendMessage(LOG_FILE, " - JavaSE - Number of arguments " + args.length, true);
-        Thread.sleep(5000);
-        helloWorld.appendMessage(LOG_FILE, " - JavaSE - " + contentAll, true);
-        helloWorld.run();
-        helloWorld.appendMessage(LOG_FILE, " - JavaSE - Exit", true);
+        helloWorld.appendMessage(LOG_FILE, " - JavaSE - Number of rounds " + numberOfRounds, true);
+        if (numberOfRounds > 0) {
+            helloWorld.run();
+            helloWorld.appendMessage(LOG_FILE, " - JavaSE - Exit", true);
+        } else {
+            helloWorld.appendMessage(LOG_FILE, " - JavaSE - Stopped", true);
+        }
     }
     
 }
