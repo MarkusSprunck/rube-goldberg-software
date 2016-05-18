@@ -83,8 +83,8 @@ public:
 	}
 
 	void createProgram() {
-		appendMessage(LOG_FILE, " - cpp    - delete  " + RESULT_FILE, true);
 		remove(RESULT_FILE.c_str());
+		appendMessage(LOG_FILE, " - cpp    - delete  " + RESULT_FILE + "  succeeded=" + ((!std::ifstream(RESULT_FILE.c_str())) ? "true" : "false"), true);
 
 		appendMessage(LOG_FILE, " - cpp    - create  " + RESULT_FILE, true);
 		string contentAll = base64_decode(contentAllEncoded);
@@ -129,15 +129,19 @@ const string HelloWorld::RESULT_FILE = "HelloWorld.java";
 const string HelloWorld::BASE64_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 int main(int argc, char *argv[]) {
-	usleep(1000000u);
+	// wait
+	usleep(2000000u);
 
 	string contentAll = argv[1];
 	string numberOfRounds = argv[2];
 	HelloWorld* helloWorld = new HelloWorld(contentAll, numberOfRounds);
-	helloWorld->appendMessage(HelloWorld::LOG_FILE, string(" - cpp    - Number of arguments ") + to_string(argc - 1), true);
 	helloWorld->appendMessage(HelloWorld::LOG_FILE, string(" - cpp    - Number of rounds ") + numberOfRounds, true);
-	helloWorld->run();
-	helloWorld->appendMessage(HelloWorld::LOG_FILE, " - cpp    - Exit", true);
+	if (stoi(numberOfRounds) > 0) {
+		helloWorld->run();
+		helloWorld->appendMessage(HelloWorld::LOG_FILE, " - cpp    - Exit", true);
+	} else {
+		helloWorld->appendMessage(HelloWorld::LOG_FILE, " - cpp    - Stopped", true);
+	}
 	return 0;
 }
 

@@ -26,10 +26,11 @@ public class HelloWorld {
         appendMessage(LOG_FILE, " - JavaSE - execute " + RESULT_FILE, true);
         new Thread() {
             public void run() {
-                Integer remainingNumberOfRounds = (numberOfRounds-1);
+                Integer remainingNumberOfRounds = (numberOfRounds - 1);
                 ProcessBuilder pb = new ProcessBuilder("python", RESULT_FILE, contentAllEncoded, remainingNumberOfRounds.toString());
                 try {
                     pb.start();
+                  //  System.exit(0);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -38,8 +39,8 @@ public class HelloWorld {
     }
     
     private void createProgram() throws IOException {
-        appendMessage(LOG_FILE, " - JavaSE - delete  " + RESULT_FILE, true);
-        Files.deleteIfExists(Paths.get(RESULT_FILE));
+        boolean succeeded = Files.deleteIfExists(Paths.get(RESULT_FILE));
+        appendMessage(LOG_FILE, " - JavaSE - delete  " + RESULT_FILE + "    succeeded=" + succeeded, true);
         
         appendMessage(LOG_FILE, " - JavaSE - create  " + RESULT_FILE, true);
         String contentPythonEncoded = new String(Base64.getDecoder().decode(contentAllEncoded), "UTF-8").split(" ")[1];
@@ -67,12 +68,12 @@ public class HelloWorld {
     }
     
     public static void main(String[] args) throws IOException, InterruptedException {
-        Thread.sleep(1000);
+        // wait
+        Thread.sleep(2000);
         
         final String contentAll = args[0];
         final Integer numberOfRounds = Integer.parseInt(args[1]);
         HelloWorld helloWorld = new HelloWorld(contentAll, numberOfRounds);
-        helloWorld.appendMessage(LOG_FILE, " - JavaSE - Number of arguments " + args.length, true);
         helloWorld.appendMessage(LOG_FILE, " - JavaSE - Number of rounds " + numberOfRounds, true);
         if (numberOfRounds > 0) {
             helloWorld.run();

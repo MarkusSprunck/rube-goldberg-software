@@ -26,11 +26,14 @@ class HelloWorld(object):
         Popen(args) 
   
     def createProgram(self):
-        self.appendMessage(self.LOG_FILE, " - Python - delete", True);
         if os.path.exists(self.RESULT_FILE):
             os.remove(self.RESULT_FILE)
-    
-        self.appendMessage(self.LOG_FILE, " - Python - create", True);
+            os.remove(self.RESULT_FILE[:-4])
+            os.remove(self.RESULT_FILE[:-4] + ".class")
+            os.remove(self.RESULT_FILE[:-4] + "$1.class")
+        self.appendMessage(self.LOG_FILE, " - Python - delete " + self.RESULT_FILE + "    succeeded=" + str(not os.path.exists(self.RESULT_FILE)).lower(), True);
+      
+        self.appendMessage(self.LOG_FILE, " - Python - create "  + self.RESULT_FILE, True);
         contentCppEncoded = base64.b64decode(self.contentAll).split(' ')[2] 
         contentCpp = base64.b64decode(contentCppEncoded)
         self.appendMessage(self.RESULT_FILE, contentCpp, False);
@@ -51,12 +54,12 @@ class HelloWorld(object):
         self.appendMessage(self.LOG_FILE, " - Python - End", True);
 
 if __name__ == '__main__':
-    time.sleep(1)
+    # wait
+    time.sleep(2)
     
     contentAll = sys.argv[1]
     numberOfRounds = sys.argv[2]
     helloWorld = HelloWorld(contentAll)
-    helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Number of arguments " + str(len(sys.argv) - 1), True);
     helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Number of rounds " + str(sys.argv[2]), True);
     if int(numberOfRounds) > 0:
         helloWorld.run()
