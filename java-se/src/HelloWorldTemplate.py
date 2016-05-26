@@ -5,7 +5,6 @@ import time
 import datetime
 import subprocess
 from subprocess import Popen
-from findertools import sleep
 
 class HelloWorld(object):
     

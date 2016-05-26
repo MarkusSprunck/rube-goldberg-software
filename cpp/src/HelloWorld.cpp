@@ -78,7 +78,7 @@ public:
 	void executeProgram() {
 		appendMessage(LOG_FILE, " - cpp    - execute " + RESULT_FILE, true);
 		std::system("javac  HelloWorld.java");
-		string command = "java HelloWorld " + this->contentAllEncoded + " " + this->numberOfRounds;
+		string command = "java HelloWorld " + this->contentAllEncoded + " " + this->numberOfRounds + " &";
 		std::system(command.c_str());
 	}
 
