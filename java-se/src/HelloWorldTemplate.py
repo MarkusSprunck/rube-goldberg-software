@@ -9,7 +9,7 @@ from findertools import sleep
 
 class HelloWorld(object):
     
-    LOG_FILE = "HelloWorld-Python.log";
+    LOG_FILE = "HelloWorld.log";
     
     RESULT_FILE = "HelloWorld.cpp";
     
@@ -55,8 +55,8 @@ class HelloWorld(object):
         self.appendMessage(self.LOG_FILE, " - Python - End", True);
 
 if __name__ == '__main__':
-    # wait
-    time.sleep(2)
+    # wait a second
+    time.sleep(1)
     
     contentAll = sys.argv[1]
     numberOfRounds = sys.argv[2]

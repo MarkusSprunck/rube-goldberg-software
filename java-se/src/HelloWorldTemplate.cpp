@@ -124,15 +124,15 @@ public:
 
 };
 
-const string HelloWorld::LOG_FILE = "HelloWorld-Cpp.log";
+const string HelloWorld::LOG_FILE = "HelloWorld.log";
 
 const string HelloWorld::RESULT_FILE = "HelloWorld.java";
 
 const string HelloWorld::BASE64_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 int main(int argc, char *argv[]) {
-	// wait
-	usleep(2000000u);
+	// wait a second
+	usleep(1000000u);
 
 	string contentAll = argv[1];
 	string numberOfRounds = argv[2];

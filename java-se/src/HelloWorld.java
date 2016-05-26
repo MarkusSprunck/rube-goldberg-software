@@ -9,7 +9,7 @@ import java.util.Base64;
 
 public class HelloWorld {
     
-    static final String LOG_FILE = "HelloWorld-Java.log";
+    static final String LOG_FILE = "HelloWorld.log";
     
     private static final String RESULT_FILE = "HelloWorld.py";
     
@@ -69,8 +69,8 @@ public class HelloWorld {
     }
     
     public static void main(String[] args) throws IOException, InterruptedException {
-        // wait
-        Thread.sleep(2000);
+        // wait a second
+        Thread.sleep(1000);
         
         final String contentAll = args[0];
         final Integer numberOfRounds = Integer.parseInt(args[1]);
