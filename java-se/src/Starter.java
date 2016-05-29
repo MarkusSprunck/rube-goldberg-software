@@ -6,13 +6,9 @@ import static java.nio.file.StandardCopyOption.*;
 
 public class Starter {
     
-    private static final String CPP_SRC_PATH = "../java-se/src/HelloWorld.cpp";
-    private static final String PYTHON_SRC_PATH = "../java-se/src/HelloWorld.py";
+    private static final String CPP_SRC_PATH = "../cpp/src/HelloWorld.cpp";
+    private static final String PYTHON_SRC_PATH = "../python/src/HelloWorld.py";
     private static final String JAVA_SE_SRC_PATH = "../java-se/src/HelloWorld.java";
-    private static final String JAVA_SE_TARGET_PATH = "./HelloWorld.java";
-    
-    private static final String PYTHON_TARGET_SRC_PATH = "../python/src/HelloWorld.py";
-    private static final String CPP_TARGET_SRC_PATH = "../cpp/src/HelloWorld.cpp";
     
     public static void main(String[] args) throws IOException, InterruptedException {
         
@@ -37,13 +33,9 @@ public class Starter {
         Files.deleteIfExists(Paths.get("HelloWorld.py"));
         
         Thread.sleep(1000);
-     
-        // copy sources to sub-projects for debugging
-        Files.copy(Paths.get(CPP_SRC_PATH), Paths.get(CPP_TARGET_SRC_PATH), REPLACE_EXISTING);
-        Files.copy(Paths.get(PYTHON_SRC_PATH), Paths.get(PYTHON_TARGET_SRC_PATH), REPLACE_EXISTING);
         
         // start
-        Files.copy(Paths.get(JAVA_SE_SRC_PATH), Paths.get(JAVA_SE_TARGET_PATH), REPLACE_EXISTING);
+        Files.copy(Paths.get(JAVA_SE_SRC_PATH), Paths.get(JAVA_SE_SRC_PATH), REPLACE_EXISTING);
         new ProcessBuilder("javac", "HelloWorld.java").start().waitFor();
         new ProcessBuilder("java", "HelloWorld", contentAllEncoded, "3").start();
         
