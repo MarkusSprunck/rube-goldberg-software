@@ -6,8 +6,8 @@ import static java.nio.file.StandardCopyOption.*;
 
 public class Starter {
     
-    private static final String CPP_SRC_PATH = "../java-se/src/HelloWorldTemplate.cpp";
-    private static final String PYTHON_SRC_PATH = "../java-se/src/HelloWorldTemplate.py";
+    private static final String CPP_SRC_PATH = "../java-se/src/HelloWorld.cpp";
+    private static final String PYTHON_SRC_PATH = "../java-se/src/HelloWorld.py";
     private static final String JAVA_SE_SRC_PATH = "../java-se/src/HelloWorld.java";
     private static final String JAVA_SE_TARGET_PATH = "./HelloWorld.java";
     
