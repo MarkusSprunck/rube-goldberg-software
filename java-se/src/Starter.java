@@ -35,7 +35,7 @@ public class Starter {
         Thread.sleep(1000);
         
         // start
-        Files.copy(Paths.get(JAVA_SE_SRC_PATH), Paths.get(JAVA_SE_SRC_PATH), REPLACE_EXISTING);
+        Files.copy(Paths.get(JAVA_SE_SRC_PATH), Paths.get(System.getProperty("user.dir") + "/HelloWorld.java"), REPLACE_EXISTING);
         new ProcessBuilder("javac", "HelloWorld.java").start().waitFor();
         new ProcessBuilder("java", "HelloWorld", contentAllEncoded, "3").start();
         

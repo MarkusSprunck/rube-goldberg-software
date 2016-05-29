@@ -54,8 +54,8 @@ class HelloWorld(object):
         self.appendMessage(self.LOG_FILE, " - Python - End", True);
 
 if __name__ == '__main__':
-    # wait a second
-    time.sleep(1)
+    # wait
+    time.sleep(3)
     
     contentAll = sys.argv[1]
     numberOfRounds = sys.argv[2]

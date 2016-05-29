@@ -69,8 +69,8 @@ public class HelloWorld {
     }
     
     public static void main(String[] args) throws IOException, InterruptedException {
-        // wait a second
-        Thread.sleep(1000);
+        // wait
+        Thread.sleep(3000);
         
         final String contentAll = args[0];
         final Integer numberOfRounds = Integer.parseInt(args[1]);
