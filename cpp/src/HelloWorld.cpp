@@ -105,9 +105,9 @@ public:
 			timeval curTime;
 			gettimeofday(&curTime, NULL);
 			int milli = curTime.tv_usec / 1000;
-			char buf[sizeof "2011-10-08T07:07:09"];
+			char buf[sizeof "2011-10-08T07:07:090"];
 			strftime(buf, sizeof buf, "%FT%T", localtime(&now));
-			sprintf(buf, "%s.%d", buf, milli);
+			sprintf(buf, "%s.%03d", buf, milli);
 			outfile << buf;
 		}
 		outfile << message << endl;
@@ -119,7 +119,7 @@ public:
 		appendMessage(LOG_FILE, " - cpp    - Hello, World!", true);
 		createProgram();
 		executeProgram();
-		appendMessage(LOG_FILE, " - cpp    - End", true);
+		appendMessage(LOG_FILE, " - cpp    - end", true);
 	}
 
 };
@@ -137,12 +137,12 @@ int main(int argc, char *argv[]) {
 	string contentAll = argv[1];
 	string numberOfRounds = argv[2];
 	HelloWorld* helloWorld = new HelloWorld(contentAll, numberOfRounds);
-	helloWorld->appendMessage(HelloWorld::LOG_FILE, string(" - cpp    - Number of rounds ") + numberOfRounds, true);
+	helloWorld->appendMessage(HelloWorld::LOG_FILE, string(" - cpp    - round ") + numberOfRounds, true);
 	if (stoi(numberOfRounds) > 0) {
 		helloWorld->run();
-		helloWorld->appendMessage(HelloWorld::LOG_FILE, " - cpp    - Exit", true);
+		helloWorld->appendMessage(HelloWorld::LOG_FILE, " - cpp    - exit", true);
 	} else {
-		helloWorld->appendMessage(HelloWorld::LOG_FILE, " - cpp    - Stopped", true);
+		helloWorld->appendMessage(HelloWorld::LOG_FILE, " - cpp    - stopped", true);
 	}
 	return 0;
 }

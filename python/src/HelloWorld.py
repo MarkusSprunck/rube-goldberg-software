@@ -51,7 +51,7 @@ class HelloWorld(object):
         self.appendMessage(self.LOG_FILE, " - Python - Hello, World!", True);
         self.createProgram()
         self.executeProgram()
-        self.appendMessage(self.LOG_FILE, " - Python - End", True);
+        self.appendMessage(self.LOG_FILE, " - Python - end", True);
 
 if __name__ == '__main__':
     # wait
@@ -60,12 +60,12 @@ if __name__ == '__main__':
     contentAll = sys.argv[1]
     numberOfRounds = sys.argv[2]
     helloWorld = HelloWorld(contentAll)
-    helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Number of rounds " + str(sys.argv[2]), True);
+    helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - round " + str(sys.argv[2]), True);
     if int(numberOfRounds) > 0:
         helloWorld.run()
-        helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Exit", True);
+        helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - exit", True);
     else:
-        helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - Stopped", True);
+        helloWorld.appendMessage(helloWorld.LOG_FILE, " - Python - stopped", True);
     
   
 

@@ -65,7 +65,7 @@ public class HelloWorld {
         appendMessage(LOG_FILE, " - JavaSE - Hello, World!", true);
         createProgram();
         executeProgram();
-        appendMessage(LOG_FILE, " - JavaSE - End", true);
+        appendMessage(LOG_FILE, " - JavaSE - end", true);
     }
     
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -75,12 +75,12 @@ public class HelloWorld {
         final String contentAll = args[0];
         final Integer numberOfRounds = Integer.parseInt(args[1]);
         HelloWorld helloWorld = new HelloWorld(contentAll, numberOfRounds);
-        helloWorld.appendMessage(LOG_FILE, " - JavaSE - Number of rounds " + numberOfRounds, true);
+        helloWorld.appendMessage(LOG_FILE, " - JavaSE - round " + numberOfRounds, true);
         if (numberOfRounds > 0) {
             helloWorld.run();
-            helloWorld.appendMessage(LOG_FILE, " - JavaSE - Exit", true);
+            helloWorld.appendMessage(LOG_FILE, " - JavaSE - exit", true);
         } else {
-            helloWorld.appendMessage(LOG_FILE, " - JavaSE - Stopped", true);
+            helloWorld.appendMessage(LOG_FILE, " - JavaSE - stopped", true);
         }
     }
     
