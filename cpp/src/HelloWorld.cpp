@@ -62,7 +62,7 @@ private:
 			for (j = 0; (j < i - 1); j++)
 				ret += char_array_3[j];
 		}
-		return ret;
+		return (ret);
 	}
 
 private:
@@ -144,6 +144,6 @@ int main(int argc, char *argv[]) {
 	} else {
 		helloWorld->appendMessage(HelloWorld::LOG_FILE, " - cpp    - stopped", true);
 	}
-	return 0;
+	return (0);
 }
 
